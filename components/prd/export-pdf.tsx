@@ -20,6 +20,9 @@ export async function exportPreviewToPdf(
   const pills = Array.from(
     container.querySelectorAll<HTMLElement>("[class*='pill']")
   );
+  const coverConfidential = Array.from(
+    container.querySelectorAll<HTMLElement>("[class*='coverConfidential']")
+  );
   const secNums = Array.from(
     container.querySelectorAll<HTMLElement>("[class*='secNum']")
   );
@@ -28,12 +31,14 @@ export async function exportPreviewToPdf(
   );
 
   const origPillPaddingBottom = pills.map((el) => el.style.paddingBottom);
+  const origCoverConfidentialPaddingBottom = coverConfidential.map((el) => el.style.paddingBottom);
   const origSecNumMarginTop = secNums.map((el) => el.style.marginTop);
   const origSecNumPaddingTop = secNums.map((el) => el.style.paddingTop); // ← was paddingBottom
   const origSecNumAlign = secNums.map((el) => el.style.alignItems);
   const origH2MarginBottom = secH2s.map((el) => el.style.marginBottom);
 
   pills.forEach((el) => (el.style.paddingBottom = "12px"));
+  coverConfidential.forEach((el) => (el.style.paddingBottom = "12px"));
   secNums.forEach((el) => {
     el.style.marginTop = "10px";
     el.style.paddingTop = "-5px"; // ✅ this lifts the number UP
@@ -89,6 +94,7 @@ export async function exportPreviewToPdf(
   } finally {
     // ── Always restore, even if export threw ─────────────────────────
     pills.forEach((el, i) => (el.style.paddingBottom = origPillPaddingBottom[i]));
+    coverConfidential.forEach((el, i) => (el.style.paddingBottom = origCoverConfidentialPaddingBottom[i]));
     secNums.forEach((el, i) => {
       el.style.marginTop = origSecNumMarginTop[i];
       el.style.paddingTop = origSecNumPaddingTop[i];
