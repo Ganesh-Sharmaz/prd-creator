@@ -1,0 +1,726 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Ported 1:1 from the supplied Quantumtech PRD template.
+   Colors are driven by CSS custom properties set inline per-document
+   (brand.primaryColor / brand.accentColor) so the theme stays editable
+   without forking this stylesheet.
+   ───────────────────────────────────────────────────────────────────── */
+
+.page {
+  --primary: #1b2a6b;
+  --secondary: #2a4ed4;
+  --accent: #3d5afe;
+  --bg: #fafaf8;
+  --text: #1f2430;
+  --muted: #6b7280;
+  --border: #e2e4ec;
+  --light-blue: #eef1fb;
+  --success: #059669;
+  --warn: #d97706;
+  --card-bg: #ffffff;
+
+  width: 210mm;
+  min-height: 297mm;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", "DM Sans", sans-serif;
+  color: var(--text);
+  font-size: 9.5pt;
+  line-height: 1.6;
+  box-shadow: 0 4px 32px rgba(27, 42, 107, 0.18);
+}
+
+/* header / footer */
+.pageHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14mm;
+  border-bottom: 2px solid var(--primary);
+  background: var(--bg);
+  z-index: 10;
+}
+
+.headerLogo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.logoMark {
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.logoMark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.logoText {
+  line-height: 1.1;
+}
+
+.logoBrand {
+  font-size: 8.5pt;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.logoSub {
+  font-size: 6pt;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.headerMeta {
+  text-align: right;
+}
+
+.headerDocTitle {
+  font-size: 7.5pt;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.headerDocVer {
+  font-size: 6pt;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.pageFooter {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 10mm;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14mm;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.footerLeft,
+.footerMid,
+.footerRight {
+  font-size: 6.5pt;
+  color: var(--muted);
+}
+
+.footerRight {
+  text-align: right;
+}
+
+.pageNum {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.pageBody {
+  margin-top: 14mm;
+  margin-bottom: 10mm;
+  padding: 8mm 14mm 6mm;
+  flex: 1;
+}
+
+/* cover */
+.coverTop {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.coverStripe {
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--accent), #7b9fff);
+}
+
+.coverMain {
+  flex: 1;
+  padding: 10mm 14mm 6mm;
+  display: flex;
+  flex-direction: column;
+}
+
+.coverLogoArea {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10mm;
+}
+
+.coverLogoMark {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.coverLogoMark img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.coverLogoBrand {
+  font-size: 13pt;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.coverLogoSub {
+  font-size: 7pt;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.coverHero {
+  flex: 1;
+}
+
+.coverKicker {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.coverTitle {
+  font-size: 30pt;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+
+.coverTitle span {
+  color: var(--accent);
+}
+
+.coverSubtitle {
+  font-size: 10.5pt;
+  color: var(--muted);
+  font-weight: 400;
+  max-width: 120mm;
+  line-height: 1.5;
+  margin-bottom: 10mm;
+}
+
+.coverMetaGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  max-width: 140mm;
+  margin-bottom: 10mm;
+}
+
+.coverMetaItem {
+  background: var(--light-blue);
+  border: 1px solid #c5cefa;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.coverMetaKey {
+  font-size: 6.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+
+.coverMetaVal {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--primary);
+  margin-top: 1px;
+}
+
+.coverBottom {
+  background: var(--primary);
+  color: #fff;
+  padding: 6mm 14mm;
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coverBottomLeft p {
+  font-size: 7.5pt;
+  color: #a8b8e8;
+  line-height: 1.8;
+}
+
+.coverBottomLeft p strong {
+  color: #fff;
+}
+
+.coverConfidential {
+  font-size: 6.5pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: #e0e7ff;
+}
+
+/* typography */
+.secEyebrow {
+  font-size: 6.5pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 3px;
+}
+
+.page h2 {
+  font-size: 13pt;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 5px;
+}
+
+.page h4 {
+  font-size: 8.5pt;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 3px;
+}
+
+.page p {
+  margin-bottom: 5px;
+  color: var(--text);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.dividerThick {
+  border: none;
+  border-top: 2px solid var(--light-blue);
+  margin: 8px 0;
+}
+
+.secHeading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.secNum {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 8pt;
+  font-weight: 800;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink: 0;
+}
+
+.secHeading h2 {
+  margin-bottom: 0;
+}
+
+/* cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.cardBlue {
+  background: var(--light-blue);
+  border-color: #c5cefa;
+}
+
+.cardDark {
+  background: var(--primary);
+  color: #fff;
+}
+
+.cardDark h3,
+.cardDark h4,
+.cardDark p {
+  color: #fff;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.checkList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 0;
+}
+
+.checkList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  font-size: 8.5pt;
+}
+
+.checkList li::before {
+  content: "✓";
+  color: var(--success);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.5px;
+}
+
+.crossList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 0;
+}
+
+.crossList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  font-size: 8.5pt;
+  color: var(--muted);
+}
+
+.crossList li::before {
+  content: "✗";
+  color: #ef4444;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.5px;
+}
+
+table.prdTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.5pt;
+  margin-bottom: 8px;
+}
+
+.prdTable thead tr {
+  background: var(--primary);
+  color: #fff;
+}
+
+.prdTable thead th {
+  padding: 6px 9px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 8pt;
+}
+
+.prdTable tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.prdTable tbody tr:nth-child(even) {
+  background: var(--light-blue);
+}
+
+.prdTable tbody td {
+  padding: 5px 9px;
+  color: var(--text);
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.pill {
+  padding: 0 9px;
+  border-radius: 20px;
+  font-size: 7.5pt;
+  font-weight: 500;
+  background: var(--light-blue);
+  color: var(--primary);
+  border: 1px solid #c5cefa;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  line-height: 20px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.milestoneRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+}
+
+.milestoneCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  border-top: 3px solid var(--accent);
+}
+
+.milestoneCard.highlight {
+  border-top-color: var(--success);
+}
+
+.milestoneDay {
+  font-size: 7pt;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.milestoneCard.highlight .milestoneDay {
+  color: var(--success);
+}
+
+.milestoneLabel {
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 2px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.tlPhase {
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.tlLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 26px;
+  flex-shrink: 0;
+}
+
+.tlDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2.5px solid var(--primary);
+  flex-shrink: 0;
+}
+
+.tlDot.done {
+  background: var(--success);
+}
+
+.tlLine {
+  flex: 1;
+  width: 2px;
+  background: var(--border);
+  margin-top: 2px;
+}
+
+.tlContent {
+  padding-bottom: 12px;
+  flex: 1;
+}
+
+.tlPhaseLabel {
+  font-size: 6.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+}
+
+.tlPhaseDays {
+  font-size: 8pt;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.tlPhaseItems {
+  font-size: 7.5pt;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.payTable td:last-child {
+  text-align: right;
+  font-weight: 600;
+}
+
+.payTotal td {
+  font-weight: 800;
+  font-size: 9.5pt;
+  background: var(--primary) !important;
+  color: #fff;
+}
+
+.payTotal td:last-child {
+  color: #a5f3fc;
+}
+
+.respTable td:nth-child(2),
+.respTable td:nth-child(3) {
+  text-align: center;
+}
+
+.matrixCheck {
+  color: var(--success);
+  font-weight: 700;
+  font-size: 10pt;
+  line-height: 1;
+}
+
+.sigBlock {
+  display: flex;
+  gap: 16px;
+}
+
+.sigBox {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: var(--card-bg);
+}
+
+.sigLabel {
+  font-size: 7pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.sigName {
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.sigSub {
+  font-size: 7.5pt;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.sigLine {
+  border-top: 1px solid var(--border);
+  margin: 24px 0 4px;
+}
+
+.sigField {
+  font-size: 7pt;
+  color: var(--muted);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  font-size: 6.5pt;
+  font-weight: 600;
+}
+
+.badgeAccent {
+  background: #e8ecff;
+  color: var(--accent);
+}
+
+.mt4 {
+  margin-top: 4px;
+}
+
+.mt6 {
+  margin-top: 6px;
+}
+
+.mb6 {
+  margin-bottom: 6px;
+}
+
+.mb8 {
+  margin-bottom: 8px;
+}
+
+.small {
+  font-size: 8pt;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+@media print {
+  .page {
+    box-shadow: none;
+  }
+}
