@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ClipboardCopy, FileJson, Sparkles, X, AlertTriangle, ArrowLeft } from "lucide-react";
 import { buildAiImportPrompt } from "@/lib/ai-prompt-template";
@@ -20,6 +20,7 @@ export function ImportModal({
   const [copied, setCopied] = useState(false);
   const [pasted, setPasted] = useState("");
   const [errors, setErrors] = useState<string[]>([]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const prompt = buildAiImportPrompt();
 
@@ -32,7 +33,7 @@ export function ImportModal({
       setTimeout(() => {
         setCopied(false);
         setStep("paste");
-      }, 800);
+      }, 400);
     } catch {
       // Clipboard API can fail (permissions, insecure context). Fall back
       // silently — the textarea below is still selectable/copyable by hand.
@@ -54,6 +55,12 @@ export function ImportModal({
     setPasted("");
     setErrors([]);
   }
+
+  useEffect(() => {
+    if (step === "prompt" && textareaRef.current) {
+      textareaRef.current.scrollTop = textareaRef.current.scrollHeight;
+    }
+  }, [step]);
 
   return (
     <motion.div
@@ -90,7 +97,7 @@ export function ImportModal({
           </div>
           <div>
             <h2 className="text-sm font-semibold text-neutral-900">
-              {step === "prompt" ? "Import with AI" : "Paste your JSON"}
+              {step === "prompt" ? "Generate with AI" : "Paste your JSON"}
             </h2>
             <p className="text-xs text-neutral-400">
               {step === "prompt"
@@ -104,12 +111,23 @@ export function ImportModal({
           <>
             <div className="mb-3 flex flex-col gap-2 text-xs text-neutral-500">
               <Step n={1} text="Copy the prompt below." />
-              <Step n={2} text="Paste it into Claude or ChatGPT, then describe your project — company, what you're building, who it's for, budget, timeline. Give as much or as little as you know." />
+              <Step
+                n={2}
+                text={
+                  <>
+                    Paste it into Claude or ChatGPT, then scroll to the bottom of the prompt
+                    and enter your project details inside the <strong>MY PROJECT</strong>{" "}
+                    section. Include your company, product, target users, budget, timeline,
+                    and any requirements you know.
+                  </>
+                }
+              />
               <Step n={3} text="Copy the JSON it returns and paste it back here." />
             </div>
 
             <div className="relative mb-4 flex-1 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50">
               <textarea
+                ref={textareaRef}
                 readOnly
                 value={prompt}
                 className="h-56 w-full resize-none bg-transparent p-3 font-mono text-[10.5px] leading-relaxed text-neutral-600 outline-none"
@@ -221,7 +239,13 @@ export function ImportModal({
   );
 }
 
-function Step({ n, text }: Readonly<{ n: number; text: string }>) {
+function Step({
+  n,
+  text,
+}: Readonly<{
+  n: number;
+  text: React.ReactNode;
+}>) {
   return (
     <div className="flex items-start gap-2">
       <span className="mt-px flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-[9px] font-bold text-white">

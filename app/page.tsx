@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, FileStack, Layers, Loader2, FileText, X } from "lucide-react";
+import { Download, FileStack, Layers, Loader2, FileText, X, Sparkles } from "lucide-react";
 
 import { CoverEditor } from "@/components/prd/cover-editor";
 import { SectionListEditor } from "@/components/prd/section-list-editor";
@@ -200,9 +200,13 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setShowImportModal(true)}
-                className="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 transition-colors hover:bg-neutral-50"
+                className="group flex items-center gap-2 rounded-md bg-gradient-to-r from-gray-800 to-gray-900 px-4 py-2 text-xs font-semibold text-white shadow-md transition-all duration-200 hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
               >
-                Import AI
+                <Sparkles
+                  size={14}
+                  className="transition-transform duration-300 group-hover:rotate-12"
+                />
+                Generate with AI
               </button>
 
               <button
@@ -216,7 +220,7 @@ export default function Home() {
                     setDoc(emptyDocument());
                   }
                 }}
-                className="text-xs font-medium text-neutral-400 hover:text-neutral-700"
+                className="text-xs font-medium text-neutral-400 hover:text-neutral-700 cursor-pointer"
               >
                 New
               </button>
