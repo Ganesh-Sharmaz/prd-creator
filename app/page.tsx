@@ -10,6 +10,7 @@ import { PRDPreview } from "@/components/prd/prd-preview";
 import { exportPreviewToPdf } from "@/components/prd/export-pdf";
 import { PRDDocument } from "@/types/prd";
 import { defaultDocument, emptyDocument } from "@/lib/default-document";
+import { ImportModal } from "@/components/prd/import-modal";
 
 type Tab = "cover" | "sections";
 
@@ -139,6 +140,7 @@ export default function Home() {
   const [tab, setTab] = useState<Tab>("cover");
   const [showModal, setShowModal] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
   async function handleExport(filename: string) {
@@ -158,6 +160,26 @@ export default function Home() {
   return (
     <>
       <AnimatePresence>
+        {showImportModal && (
+          <ImportModal
+            onCancel={() => setShowImportModal(false)}
+            onImport={(importedDoc) => {
+              setDoc(importedDoc);
+              setShowImportModal(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showModal && (
+          <FilenameModal
+            onConfirm={handleExport}
+            onCancel={() => setShowModal(false)}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
         {showModal && (
           <FilenameModal
             onConfirm={handleExport}
@@ -174,17 +196,31 @@ export default function Home() {
               <h1 className="text-sm font-semibold text-neutral-900">PRD Generator</h1>
               <p className="text-xs text-neutral-400">Fill in details, preview updates live</p>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                if (confirm("Start a new blank document? Unsaved changes will be lost.")) {
-                  setDoc(emptyDocument());
-                }
-              }}
-              className="text-xs font-medium text-neutral-400 hover:text-neutral-700"
-            >
-              New
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setShowImportModal(true)}
+                className="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 transition-colors hover:bg-neutral-50"
+              >
+                Import AI
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (
+                    confirm(
+                      "Start a new blank document? Unsaved changes will be lost."
+                    )
+                  ) {
+                    setDoc(emptyDocument());
+                  }
+                }}
+                className="text-xs font-medium text-neutral-400 hover:text-neutral-700"
+              >
+                New
+              </button>
+            </div>
           </div>
 
           <div className="flex gap-1 border-b border-neutral-100 px-5 pt-3">
